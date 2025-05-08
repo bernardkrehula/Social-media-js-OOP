@@ -1,0 +1,59 @@
+html {
+    font-size: 62.5%;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.findFriendsBar {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(128, 128, 128, 0.3);
+    padding-right: 15px;
+    padding-left: 25px;
+    padding-top: 15px;
+    padding-bottom: 2px;
+}
+.findFriendsBar input {
+    border: none;
+    background-color: rgb(233, 233, 233);
+    border-radius: 20px;
+    padding: 4px 10px;
+    width: 350px;
+    font-size: 2.5rem;
+}
+.findFriendsBar img {
+    width: 60px;
+    border-radius: 100%;
+    margin-left: auto;
+    margin-right: 25px;
+}
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 1300px;
+    border: 1px solid rgb(128, 128, 128, 0.3);
+    border-radius: 0 0 20px 20px ;
+    padding-bottom: 60px;
+}
+.cover-photo {
+    height: 750px;
+    width: 1300px;
+}
+.profile-photo {
+    width: 250px;
+    border-radius: 100%;
+    margin-left: 60px;
+    margin-top: -120px;
+}
+.name-country {
+    font-size: 2rem;
+    margin-left: 350px;
+    margin-top: -80px;
+}
+.name-country h2 {
+    font-weight: 500;
+}
