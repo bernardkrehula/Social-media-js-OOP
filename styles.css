@@ -57,3 +57,29 @@ html {
 .name-country h2 {
     font-weight: 500;
 }
+.addPost {
+    display: flex;
+    width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.addPost input {
+    font-size: 2.2rem;
+    border: none;
+    background-color: rgb(233, 233, 233);
+    padding: 10px 15px;
+    border-radius: 20px;
+    width: 700px;
+}
+.addPost button {
+    margin-left: 20px;
+    border-radius: 10px;
+    padding: 0 80px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+    background-color: #807cff;
+}
+.addPost button:hover {
+    background-color: #6561e4;
+}
