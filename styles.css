@@ -7,12 +7,15 @@ html {
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+.main {
+    padding: 0px 25px;
+}
 .findFriendsBar {
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgb(128, 128, 128, 0.3);
     padding-right: 15px;
-    padding-left: 25px;
+    padding-left: 15px;
     padding-top: 15px;
     padding-bottom: 2px;
 }
@@ -28,7 +31,6 @@ html {
     width: 60px;
     border-radius: 100%;
     margin-left: auto;
-    margin-right: 25px;
 }
 .profile-content {
     display: flex;
@@ -82,4 +84,38 @@ html {
 }
 .addPost button:hover {
     background-color: #6561e4;
+}
+.feed {
+    background-color: #d9d9ff;
+    padding: 40px 25px;
+}
+.friends {
+    background-color: white;
+    width: 850px;
+    height: 750px;
+    padding: 30px;
+    font-size: 2rem;
+    border-radius: 20px;
+}
+.friends h2 {
+    margin-top: 15px;
+    font-weight: 500;
+}
+.friend-images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 100px 50px;
+    justify-items: center;
+    margin-top: 30px;
+}
+.friend-images li {
+    list-style-type: none;
+    text-align: center;
+}
+.friend-images img {
+    width: 230px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
 }
