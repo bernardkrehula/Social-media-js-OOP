@@ -28,9 +28,41 @@ html {
     font-size: 2.5rem;
 }
 .findFriendsBar img {
-    width: 60px;
+    width: 90px;
     border-radius: 100%;
     margin-left: auto;
+}
+.searchFriends {
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 10px;
+    background-color: white;
+    width: 350px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px 10px rgb(0, 0, 0, 0.1);
+}
+.friend {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+    transition: 0.1s ease-in-out;
+    list-style-type: none;
+}
+.friend:hover {
+    transition: 0.1s ease-in-out;
+    background-color: rgb(219, 219, 219)
+}
+.friend img {
+    height: 90px;
+    width: 90px;
+    border-radius: 80px;
+    object-fit: cover;
+}
+.friend h3 {
+    font-size: 2rem;
+    margin-left: 10px;
 }
 .profile-content {
     display: flex;
