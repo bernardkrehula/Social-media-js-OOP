@@ -118,8 +118,90 @@ html {
     background-color: #6561e4;
 }
 .feed {
+    display: flex;
     background-color: #d9d9ff;
     padding: 40px 25px;
+}
+.post {
+    background-color: white;
+    width: 870px;
+    margin-left: 40px;
+    border-radius: 20px;
+    padding: 30px;
+}
+.post img {
+    height: 90px;
+    width: 90px;
+    border-radius: 80px;
+    object-fit: cover;
+}
+.post h3 {
+    margin-top: 40px;
+    font-size: 5rem;
+    font-weight: 500;
+}
+.photo-name-date {
+    display: flex;
+    align-items: center;
+}
+.name-Date {
+    margin-left: 15px;
+}
+.name-Date h1 {
+    font-size: 3rem;
+}
+.name-Date h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: gray;
+}
+.addComment{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+.addComment input {
+    border: none;
+    background-color: rgb(233, 233, 233);
+    border-radius: 20px;
+    padding: 4px 10px;
+    width: 100%;
+    font-size: 2.5rem;
+}
+.addComment button {
+    white-space: nowrap;
+    border-radius: 10px;
+    padding: 10px 30px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+    background-color: #807cff;
+}
+.addComment button:hover {
+    background-color: #6561e4;
+}
+.showComment {
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    font-size: 2.2rem;
+    margin-top: 20px;
+}
+.likeCommentBtns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.likeCommentBtns button{
+    border: 2px solid rgb(128, 128, 128, 0.2);
+    border-radius: 20px;
+    padding: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: black;
+    background-color: white;
+    flex: 1;
 }
 .friends {
     background-color: white;

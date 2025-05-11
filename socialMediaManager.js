@@ -1,13 +1,27 @@
 import { friends } from "./friendsList.js";
 import { searchFriendsList } from "./script.js";
+import { friendListImages } from "./script.js";
 
-class FriendsList {
+//Napravi klasu user to je glavna klasa
+//Razmisli od cega se ta klasa sastoji tj koja polja na njoj treba da definiras
+//Jedno polje je friends = []
+//Od cega se friends sastoji
+//Napraviti da se doda post
+
+class User{
     constructor(){
-        this.friendListImages = document.querySelector('.friend-images');
+        this.posts = [];
+        this.user = {};
+        this.postContent = [];
+        this.postComments = [];
+        this.friends = [];
         this.foundFriends = null;
     }
+    pushFriendsInArray(){
+        friends.forEach(friend => this.friends.push(friend));
+    }
     iterateThroughArray(){
-        friends.forEach(friend => this.displayFriends(friend));
+        this.friends.forEach(friend => this.displayFriends(friend));
     }
     displayFriends(friend){
     let html = `
@@ -16,16 +30,16 @@ class FriendsList {
         <h3>${friend.firstName} ${friend.lastName}</h3>
     </li>
     `
-    this.friendListImages.insertAdjacentHTML('beforeend', html);
+    friendListImages.insertAdjacentHTML('beforeend', html);
     }
     filterFriends(value){
-        return this.foundFriends = friends.filter(friend => friend.firstName.toLocaleLowerCase().match(value) || friend.lastName.toLocaleLowerCase().match(value));
+        return this.foundFriends = this.friends.filter(friend => friend.firstName.toLocaleLowerCase().match(value) || friend.lastName.toLocaleLowerCase().match(value));
     }
     displayFilteredFriends(friend){
         let html = `
          <li class="friend">
                 <img src="${friend.img}">
-                <h3>${friend.firstName + friend.lastName}</h3>
+                <h3>${friend.firstName} ${friend.lastName}</h3>
         </li>
         `
         searchFriendsList.insertAdjacentHTML('beforeend', html);
@@ -36,25 +50,6 @@ class FriendsList {
     }
 
 }
-export const manageFriendList = new FriendsList();
-manageFriendList.iterateThroughArray();
-
-class PostCommentsAndLikes{
-    constructor(){
-        this.commentsAndLikes = [];
-    }
-}
-
-
-class UserPost{
-    constructor(){
-        this.userPost = {};
-    }
-}
-
-class PostsManager{
-    constructor(){
-        this.posts = [];
-        this.activePost = null;
-    }   
-}
+export const manageUser = new User();
+manageUser.pushFriendsInArray();
+manageUser.iterateThroughArray();

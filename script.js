@@ -5,14 +5,14 @@
 //Koji su mi objekti (instance klasa) potrebni?
 //U kojim arrayevima treba da budu ti objekti tj ko upravlja tim objektima
 //Gdje treba da se nalaze ovi arrayevi?
-import { manageFriendList } from "./socialMediaManager.js";
-
+import { manageUser } from "./socialMediaManager.js";
 
 const friendsList = document.querySelector('.friends');
 const searchBar = document.querySelector('.findFriendsBar input');
 export const searchFriendsList = document.querySelector('.searchFriends');
+export const friendListImages = document.querySelector('.friend-images');
 
 searchBar.addEventListener('input', () => {
-    manageFriendList.filterFriends(searchBar.value);
-    manageFriendList.iterateThroughFindFriends();
+    manageUser.filterFriends(searchBar.value);
+    manageUser.iterateThroughFindFriends();
 })
