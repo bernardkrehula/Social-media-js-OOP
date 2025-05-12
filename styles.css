@@ -10,6 +10,9 @@ html {
 .main {
     padding: 0px 25px;
 }
+.main button {
+    cursor: pointer;
+}
 .findFriendsBar {
     display: flex;
     align-items: center;
@@ -122,6 +125,11 @@ html {
     background-color: #d9d9ff;
     padding: 40px 25px;
 }
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
 .post {
     background-color: white;
     width: 870px;
@@ -188,6 +196,10 @@ html {
     font-size: 2.2rem;
     margin-top: 20px;
 }
+.showComment h5 {
+    cursor: pointer;
+    font-size: 2.2rem;
+}
 .likeCommentBtns {
     display: flex;
     gap: 10px;
@@ -202,6 +214,9 @@ html {
     color: black;
     background-color: white;
     flex: 1;
+}
+.likeCommentBtns button:hover {
+    background-color: rgb(128, 128, 128, 0.2);
 }
 .friends {
     background-color: white;
