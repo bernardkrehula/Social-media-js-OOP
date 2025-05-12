@@ -16,10 +16,25 @@ export class Post {
         this.likes = likes;
         this.postComments = [];
     }
+    pushCommentInArray(comment){
+        this.postComments.push(comment);
+    }
 }
-class Comments {
+export class Comment {
     constructor(content){
         this.content = content;
+    }
+    displayComment(comment, post){
+        const html = `
+        <div class="comment">
+            <img src="IMG_8725.JPG">
+            <div class="comment-name">
+                <h1>Bernard Krehula</h1>
+                <input disabled value="${comment.content}">
+            </div>
+        </div>
+        `;
+        post.insertAdjacentHTML('beforeend', html);
     }
 }
 class User {
@@ -28,6 +43,7 @@ class User {
         this.user = {};
         this.friends = [];
         this.foundFriends = null;
+        this.activePost = null;
     }
     pushFriendsInArray(){
         friends.forEach(friend => this.friends.push(friend));
@@ -36,7 +52,7 @@ class User {
         this.friends.forEach(friend => this.displayFriends(friend));
     }
     displayFriends(friend){
-    let html = `
+    const html = `
     <li>
         <img src="${friend.img}">
         <h3>${friend.firstName} ${friend.lastName}</h3>
@@ -64,8 +80,8 @@ class User {
         this.posts.push(post);
     }
     displayPost(post){
-        let html = `
-        <div class="post" id="${post.id}">
+        const html = `
+        <li class="post" id="${post.id}">
                     <div class="photo-name-date">
                         <img src="IMG_8725.JPG">
                         <div class="name-Date">
@@ -82,16 +98,24 @@ class User {
                          <button>👍🏻Like</button>
                         <button>💬Comments</button>
                     </div>
-                    <div class="addComment">
+                    <form class="addComment">
                             <img src="IMG_8725.JPG">
                             <input placeholder="Write a comment">
-                            <button class="addComment">Add comment</button>
-                    </div>
-                </div>
+                            <button class="addComment" type="submit">Add comment</button>
+                    </form>
+                </li>
         `
         posts.insertAdjacentHTML('beforeend', html);
     }
-
+    findPostById(id){
+        return this.posts.find(post => post.id === id);
+    }
+    setAcitvePost(post){
+        this.activePost = post;
+    }
+    getActivePost(){
+        return this.activePost;
+    }
 }
 export const manageUser = new User();
 manageUser.pushFriendsInArray();

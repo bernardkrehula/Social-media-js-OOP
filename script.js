@@ -7,6 +7,7 @@
 //Gdje treba da se nalaze ovi arrayevi?
 import { manageUser } from "./socialMediaManager.js";
 import { Post } from "./socialMediaManager.js";
+import { Comment } from "./socialMediaManager.js"
 
 const friendsList = document.querySelector('.friends');
 const searchBar = document.querySelector('.findFriendsBar input');
@@ -30,12 +31,15 @@ addPostBtn.addEventListener('click', () => {
     manageUser.displayPost(post);
 })
 
-posts.addEventListener('click', (e) => {
-    const addBtn = e.target.closest('button');
-    const comment = e.target.closest('input').value;
-    
-    console.log
-    if(addBtn.className === 'addComment'){
-        console.log(comment)
-    }
+posts.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target.closest('form');
+    const postId = e.target.closest('li').id;
+    const post = e.target.closest('li');
+    let commentInput = form.querySelector('input').value;
+ 
+    manageUser.setAcitvePost(manageUser.findPostById(postId));
+    const comment = new Comment(commentInput);
+    comment.displayComment(comment, post);
+    manageUser.getActivePost().pushCommentInArray(comment);
 })
