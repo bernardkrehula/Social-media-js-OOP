@@ -3,11 +3,9 @@ import { searchFriendsList } from "./script.js";
 import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
 
-//Napravi klasu user to je glavna klasa
-//Razmisli od cega se ta klasa sastoji tj koja polja na njoj treba da definiras
-//Jedno polje je friends = []
-//Od cega se friends sastoji
-//Napraviti da se doda post
+//Doradi comment classu.Sta svaki comment ima?
+//Napravi klassu like.Sta svaki like ima?
+//
 export class Post {
     constructor(writenContent, time, likes){
         this.id = crypto.randomUUID();
@@ -15,6 +13,7 @@ export class Post {
         this.writenContent = writenContent;
         this.likes = likes;
         this.postComments = [];
+        this.commentBtn = true;
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -24,7 +23,7 @@ export class Comment {
     constructor(content){
         this.content = content;
     }
-    displayComment(comment, post){
+    displayComment(comment, comments){
         const html = `
         <div class="comment">
             <img src="IMG_8725.JPG">
@@ -34,9 +33,13 @@ export class Comment {
             </div>
         </div>
         `;
-        post.insertAdjacentHTML('beforeend', html);
+    comments.insertAdjacentHTML('beforeend', html);
+    }
+    iterateThroughComments() {
+       this.postComments.forEach(comment => this.displayComment(comment));
     }
 }
+
 class User {
     constructor(){
         this.posts = [];
@@ -48,7 +51,7 @@ class User {
     pushFriendsInArray(){
         friends.forEach(friend => this.friends.push(friend));
     }
-    iterateThroughArray(){
+    iterateThroughFriendsArray(){
         this.friends.forEach(friend => this.displayFriends(friend));
     }
     displayFriends(friend){
@@ -103,6 +106,7 @@ class User {
                             <input placeholder="Write a comment">
                             <button class="addComment" type="submit">Add comment</button>
                     </form>
+                    <div class="comments"></div>
                 </li>
         `
         posts.insertAdjacentHTML('beforeend', html);
@@ -119,4 +123,4 @@ class User {
 }
 export const manageUser = new User();
 manageUser.pushFriendsInArray();
-manageUser.iterateThroughArray();
+manageUser.iterateThroughFriendsArray();

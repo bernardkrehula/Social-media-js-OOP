@@ -36,10 +36,29 @@ posts.addEventListener('submit', (e) => {
     const form = e.target.closest('form');
     const postId = e.target.closest('li').id;
     const post = e.target.closest('li');
+    const comments = post.querySelector('.comments');
     let commentInput = form.querySelector('input').value;
- 
+
     manageUser.setAcitvePost(manageUser.findPostById(postId));
+    const activePost = manageUser.getActivePost();
     const comment = new Comment(commentInput);
-    comment.displayComment(comment, post);
-    manageUser.getActivePost().pushCommentInArray(comment);
+    activePost.pushCommentInArray(comment);
+    comment.displayComment(comment, comments);
+})
+
+posts.addEventListener('click', (e) => {
+    const commentBtn = e.target.closest('h5');
+    const post = e.target.closest('li');
+    const comments = post.querySelector('.comments');
+
+    if(commentBtn){
+        if(comments.style.display === 'none'){
+            comments.style.display = 'block'
+        }
+        else{
+            comments.style.display ='none'
+        }
+        
+
+    }
 })
