@@ -8,6 +8,7 @@
 import { manageUser } from "./socialMediaManager.js";
 import { Post } from "./socialMediaManager.js";
 import { Comment } from "./socialMediaManager.js"
+import { Likes } from "./socialMediaManager.js";
 
 const friendsList = document.querySelector('.friends');
 const searchBar = document.querySelector('.findFriendsBar input');
@@ -50,6 +51,19 @@ posts.addEventListener('click', (e) => {
     const commentBtn = e.target.closest('h5');
     const post = e.target.closest('li');
     const comments = post.querySelector('.comments');
+    const like = post.querySelector('.like');
+    const postId = e.target.closest('li').id;
+
+    manageUser.setAcitvePost(manageUser.findPostById(postId));
+    const activePost = manageUser.getActivePost();
+
+    if(like){
+        const likes = new Likes('Bernard', 'Krehula');
+        activePost.pushLikeInArray(likes);
+        if(like.innerHTML = '👍🏻Like'){
+            like.innerHTML = '👍🏿Like';
+        }
+    }
 
     if(commentBtn){
         if(comments.style.display === 'none'){
@@ -58,7 +72,5 @@ posts.addEventListener('click', (e) => {
         else{
             comments.style.display ='none'
         }
-        
-
     }
 })

@@ -11,17 +11,30 @@ export class Post {
         this.id = crypto.randomUUID();
         this.time = time;
         this.writenContent = writenContent;
-        this.likes = likes;
+        this.likes = [];
         this.postComments = [];
         this.commentBtn = true;
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
     }
+    pushLikeInArray(like){
+        this.likes.push(like);
+    }
+}
+export class Likes {
+    constructor(name, lastName){
+        this.id = crypto.randomUUID();
+        this.name = name;
+        this.lastName = lastName;
+    }
 }
 export class Comment {
     constructor(content){
         this.content = content;
+        this.userName;
+        this.userLastName;
+        this.userImg;
     }
     displayComment(comment, comments){
         const html = `
@@ -98,7 +111,7 @@ class User {
                         <h5>4 comments</h5>
                     </div>
                     <div class="likeCommentBtns">
-                         <button>👍🏻Like</button>
+                         <button class="like">👍🏻Like</button>
                         <button>💬Comments</button>
                     </div>
                     <form class="addComment">
