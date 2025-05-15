@@ -2,6 +2,8 @@ import { friends } from "./friendsList.js";
 import { searchFriendsList } from "./script.js";
 import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
+import { commentsFirstPost } from "./commentsList.js";
+import { commentsThirdPost } from "./commentsList.js";
 
 //Dodati display likes i komentara vec postojecih
 
@@ -30,9 +32,6 @@ export class Post {
         this.likes.push(like);
     }
 }
-const firstPost = new Post("If I'm to choose between one evil and another, I'd rather not choose at all.", "11 months ago");
-const secondPost = new Post("It's not who I am underneath, but what I do that defines me.", 'about 1 year ago');
-const thirdPost = new Post("A true hero isn't measured by the size of his strength but by the strength of his heart", 'about 1 year ago');
 
 export class Likes {
     constructor(id, name, lastName){
@@ -150,3 +149,14 @@ class User {
 export const manageUser = new User();
 manageUser.pushFriendsInArray();
 manageUser.iterateThroughFriendsArray();
+
+const firstPost = new Post("If I'm to choose between one evil and another, I'd rather not choose at all.", "11 months ago");
+const secondPost = new Post("It's not who I am underneath, but what I do that defines me.", 'about 1 year ago');
+const thirdPost = new Post("A true hero isn't measured by the size of his strength but by the strength of his heart", 'about 1 year ago');
+
+manageUser.pushPostInArray(firstPost);
+manageUser.displayPost(firstPost);
+manageUser.pushPostInArray(secondPost);
+manageUser.displayPost(secondPost);
+manageUser.pushPostInArray(thirdPost);
+manageUser.displayPost(thirdPost);
