@@ -1,10 +1,3 @@
-//Css: cover slika profilna slika user informacije, prijatelje izlistat i stilizovat, dodat input za dodvanje postova bez funckije
-//Dodat funkcionalnst za pretrazivanje prijatelja
-//Napravit postavku zadatka: kako organizovati klase?
-//Koja polja trebaju imat te klase?
-//Koji su mi objekti (instance klasa) potrebni?
-//U kojim arrayevima treba da budu ti objekti tj ko upravlja tim objektima
-//Gdje treba da se nalaze ovi arrayevi?
 import { manageUser } from "./socialMediaManager.js";
 import { Post } from "./socialMediaManager.js";
 import { Comment } from "./socialMediaManager.js"
@@ -51,20 +44,20 @@ posts.addEventListener('click', (e) => {
     const commentBtn = e.target.closest('h5');
     const post = e.target.closest('li');
     const comments = post.querySelector('.comments');
+    const btn = e.target.closest('button');
     const like = post.querySelector('.like');
     const postId = e.target.closest('li').id;
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
-
-    if(like){
-        const likes = new Likes('Bernard', 'Krehula');
-        activePost.pushLikeInArray(likes);
-        if(like.innerHTML = '👍🏻Like'){
-            like.innerHTML = '👍🏿Like';
-        }
+    if(btn){
+        if(btn.className === 'like'){
+                const id = crypto.randomUUID();
+                const likes = new Likes(id, 'Bernard', 'Krehula');
+                activePost.pushLikeInArray(likes);
+            }
     }
-
+   
     if(commentBtn){
         if(comments.style.display === 'none'){
             comments.style.display = 'block'

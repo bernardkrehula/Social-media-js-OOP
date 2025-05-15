@@ -3,17 +3,25 @@ import { searchFriendsList } from "./script.js";
 import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
 
-//Doradi comment classu.Sta svaki comment ima?
-//Napravi klassu like.Sta svaki like ima?
-//
+//Dodati display likes i komentara vec postojecih
+
+//Lista featura: 
+//-Da se dodaje novi post
+//-Da se komentarise
+//-Da se edituje post
+//-Da se edituje komentar
+//-Da se lajkuje post
+//-Da se lajkuje komentar
+//-Da se obrise post (samo svoj)
+//-Da se obrise komentar (samo svoj)
+//Bonus - da se edituje komentar
 export class Post {
-    constructor(writenContent, time, likes){
+    constructor(writenContent, time){
         this.id = crypto.randomUUID();
         this.time = time;
         this.writenContent = writenContent;
         this.likes = [];
         this.postComments = [];
-        this.commentBtn = true;
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -22,11 +30,16 @@ export class Post {
         this.likes.push(like);
     }
 }
+const firstPost = new Post("If I'm to choose between one evil and another, I'd rather not choose at all.", "11 months ago");
+const secondPost = new Post("It's not who I am underneath, but what I do that defines me.", 'about 1 year ago');
+const thirdPost = new Post("A true hero isn't measured by the size of his strength but by the strength of his heart", 'about 1 year ago');
+
 export class Likes {
-    constructor(name, lastName){
-        this.id = crypto.randomUUID();
+    constructor(id, name, lastName){
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
+        this.isLiked = isLiked;
     }
 }
 export class Comment {
