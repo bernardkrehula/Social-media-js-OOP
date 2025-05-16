@@ -3,13 +3,13 @@ import { Post } from "./socialMediaManager.js";
 import { Comment } from "./socialMediaManager.js"
 import { Likes } from "./socialMediaManager.js";
 
-const friendsList = document.querySelector('.friends');
 const searchBar = document.querySelector('.findFriendsBar input');
 export const searchFriendsList = document.querySelector('.searchFriends');
 export const friendListImages = document.querySelector('.friend-images');
 const addPostBtn = document.querySelector('.addPost button');
 const addPostInput = document.querySelector('.addPost input');
 export const posts = document.querySelector('.posts');
+export const feed = document.querySelector('.feed');
 
 searchBar.addEventListener('input', () => {
     manageUser.filterFriends(searchBar.value);
@@ -35,7 +35,7 @@ posts.addEventListener('submit', (e) => {
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
-    const comment = new Comment(commentInput);
+    const comment = new Comment(commentInput, 'Bernard', 'Krehula', 'IMG_8725.JPG');
     activePost.pushCommentInArray(comment);
     comment.displayComment(comment, comments);
 })
@@ -45,7 +45,6 @@ posts.addEventListener('click', (e) => {
     const post = e.target.closest('li');
     const comments = post.querySelector('.comments');
     const btn = e.target.closest('button');
-    const like = post.querySelector('.like');
     const postId = e.target.closest('li').id;
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));

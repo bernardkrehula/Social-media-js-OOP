@@ -4,6 +4,7 @@ import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
 import { commentsFirstPost } from "./commentsList.js";
 import { commentsThirdPost } from "./commentsList.js";
+import { feed } from "./script.js";
 
 //Dodati display likes i komentara vec postojecih
 
@@ -24,12 +25,38 @@ export class Post {
         this.writenContent = writenContent;
         this.likes = [];
         this.postComments = [];
+        this.commentSection = feed.querySelector('.posts');
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
     }
     pushLikeInArray(like){
         this.likes.push(like);
+    }
+    createFirstPostComments(){
+        commentsFirstPost.forEach(comment => this.pushFirstPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
+    }
+    createThirdPostComments(){
+        commentsThirdPost.forEach(comment => this.pushThirdPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
+    }
+    pushFirstPostCommentsInArray(comment){
+        if(comment) this.postComments.push(comment);
+    }
+    pushThirdPostCommentsInArray(comment){
+         if(comment) this.postComments.push(comment);
+    }
+    displayFirstPostComments(){
+        let commentlists = this.commentSection.querySelectorAll('li');
+        const commentSec = commentlists[0].children[5];
+        this.postComments.forEach(comment => comment.displayComment(comment, commentSec));
+    }
+    displayThirdPostComments(){
+        let commentlists = this.commentSection.querySelectorAll('li');
+        const commentSec = commentlists[2].children[5];
+        this.postComments.forEach(comment => comment.displayComment(comment, commentSec));
+    }
+    returnPostComments(){
+        return this.postComments;
     }
 }
 
@@ -42,27 +69,27 @@ export class Likes {
     }
 }
 export class Comment {
-    constructor(content){
+    constructor(content, userName, userLastName, userImg){
         this.content = content;
-        this.userName;
-        this.userLastName;
-        this.userImg;
+        this.userName = userName;
+        this.userLastName = userLastName;
+        this.userImg = userImg;
     }
     displayComment(comment, comments){
         const html = `
         <div class="comment">
-            <img src="IMG_8725.JPG">
+            <img src="${comment.userImg}">
             <div class="comment-name">
-                <h1>Bernard Krehula</h1>
+                <h1>${comment.userName} ${comment.userLastName}</h1>
                 <input disabled value="${comment.content}">
             </div>
         </div>
         `;
     comments.insertAdjacentHTML('beforeend', html);
     }
-    iterateThroughComments() {
+   /*  iterateThroughComments() {
        this.postComments.forEach(comment => this.displayComment(comment));
-    }
+    } */
 }
 
 class User {
@@ -134,7 +161,7 @@ class User {
                     <div class="comments"></div>
                 </li>
         `
-        posts.insertAdjacentHTML('beforeend', html);
+        posts.insertAdjacentHTML('afterbegin', html);
     }
     findPostById(id){
         return this.posts.find(post => post.id === id);
@@ -155,8 +182,17 @@ const secondPost = new Post("It's not who I am underneath, but what I do that de
 const thirdPost = new Post("A true hero isn't measured by the size of his strength but by the strength of his heart", 'about 1 year ago');
 
 manageUser.pushPostInArray(firstPost);
-manageUser.displayPost(firstPost);
 manageUser.pushPostInArray(secondPost);
-manageUser.displayPost(secondPost);
 manageUser.pushPostInArray(thirdPost);
+
+manageUser.displayPost(firstPost);
+manageUser.displayPost(secondPost);
 manageUser.displayPost(thirdPost);
+
+firstPost.createFirstPostComments();
+thirdPost.createThirdPostComments();
+firstPost.pushFirstPostCommentsInArray();
+thirdPost.pushThirdPostCommentsInArray();
+
+firstPost.displayFirstPostComments();
+thirdPost.displayThirdPostComments();
