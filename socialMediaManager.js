@@ -34,58 +34,30 @@ export class Post {
     pushLikeInArray(like){
         this.likes.push(like);
     }
-    createDefaultComments(){
-
+    findPost(){
+        return 
     }
-
+    createDefaultComments(){
+        console.log('radi')
+    }
     createPostComments(){
-        commentsPost.forEach(comments => comments.forEach(comment => console.log(comment)))
-        for(let i = 0; i < this.postComments.length; i++){
-            console.log('radi', i)
-        }
+        commentsPost.forEach((comments, index) => console.log(index) )
         // commentsFirstPost.forEach(comment => this.pushFirstPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
     }
-     pushPostCommentsInArray(){
+    pushPostCommentsInArray(){
         commentsPost.forEach(comments => this.postComments.push(comments));
     }
-    /*
-    createThirdPostComments(){
-        commentsThirdPost.forEach(comment => this.pushThirdPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
-    }
-    pushThirdPostCommentsInArray(comment){
-        if(comment) this.postComments.push(comment);
-    }
-    displayFirstPostComments(){
-        let commentlists = this.commentSection.querySelectorAll('li');
-        const commentSec = commentlists[0].children[5];
-        this.postComments.forEach(comment => comment.displayComment(comment, commentSec));
-    }
-    displayThirdPostComments(){
-        let commentlists = this.commentSection.querySelectorAll('li');
-        const commentSec = commentlists[2].children[5];
-        this.postComments.forEach(comment => comment.displayComment(comment, commentSec));
-    }
-    createPostLikes(){
-        postLikes.forEach(like => this.pushPostLikesInArray(new Likes(like.name, like.lastName)))
-    }
-    pushPostLikesInArray(like){
-        if(like) this.likes.push(like);
-    }
-    displayFirstPostLikes(){
-        let likesList = this.likesSection.querySelectorAll('li');
-        const likeSec = likesList[0].children[2];
-        this.likes.forEach(like => like.displayLikes(like, likeSec));
-    }
-    displaySecondPostLikes(){
-        let likesList = this.likesSection.querySelectorAll('li');
-        const likeSec = likesList[1].children[2];
-        this.likes.forEach(like => like.displayLikes(like, likeSec));
-    }
-    displayThirdPostLikes(){
-        let likesList = this.likesSection.querySelectorAll('li');
-        const likeSec = likesList[2].children[2];
-        this.likes.forEach(like => like.displayLikes(like, likeSec));
-    } */
+    addComments(commentsArray) {
+    commentsArray.forEach(commentData => {
+        const comment = new Comment(
+            commentData.content,
+            commentData.userName,
+            commentData.userLastName,
+            commentData.userImg
+        );
+        this.postComments.push(comment);
+    });
+}
 }
 
 export class Likes {
@@ -191,7 +163,10 @@ class User {
                     <div class="comments"></div>
                 </li>
         `
-        posts.insertAdjacentHTML('afterbegin', html);
+        posts.insertAdjacentHTML('beforeend', html);
+
+
+
     }
     findPostById(id){
         return this.posts.find(post => post.id === id);
@@ -203,7 +178,7 @@ class User {
         return this.activePost;
     }
     pushDefaultPostInArray(){   
-        postContent.forEach(post => this.posts.unshift(post));
+        postContent.forEach(post => this.posts.push(new Post(post.writenContent, post.time, post.id)));
     }
     iterateThroughDefaultPost(){
         this.posts.forEach(post => this.displayPost(post));
@@ -220,4 +195,10 @@ manageUser.pushDefaultPostInArray();
 manageUser.iterateThroughDefaultPost();
 
 manageUser.pushPostInArray();
-manageUser.getDefaultPosts()
+manageUser.getDefaultPosts().forEach((post, index) => {
+    const commentsForThisPost = commentsPost[index];
+    if (commentsForThisPost) {
+        post.addComments(commentsForThisPost);
+    }
+});
+manageUser.iterateThroughDefaultPost();
