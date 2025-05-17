@@ -1,5 +1,5 @@
-export const commentsFirstPost = [
-    {
+export const commentsPost = [
+    [{
         content: "Makes me ponder on the importance of staying true to one's moral compass.",
         userName: 'Majda',
         userLastName: 'Odzaklijevska',
@@ -22,11 +22,8 @@ export const commentsFirstPost = [
         userName: 'Gordana',
         userLastName: 'Stouns',
         userImg: '/images/profile1.jpg'
-    }
-];
-
-export const commentsThirdPost = [
-    {
+    }],
+    [{
         content: "Sometimes, it's the small gestures that make someone a hero",
         userName: 'Hiroshi',
         userLastName: 'Tanaka',
@@ -43,5 +40,5 @@ export const commentsThirdPost = [
         userName: 'Gordana',
         userLastName: 'Stouns',
         userImg: '/images/profile1.jpg'
-    }
-]
+    }]
+];

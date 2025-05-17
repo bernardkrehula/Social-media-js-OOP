@@ -2,10 +2,9 @@ import { friends } from "./friendsList.js";
 import { searchFriendsList } from "./script.js";
 import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
-import { commentsFirstPost } from "./commentsList.js";
-import { commentsThirdPost } from "./commentsList.js";
-import { feed } from "./script.js";
-import { postLikes } from "./postLikes.js"; 
+import { commentsPost } from "./commentsList.js";
+import { postLikes } from "./postLikes.js";
+import { postContent } from "./postContent.js";
 
 //Dodati display likes i komentara vec postojecih
 //Napraviti na nacin da se svaki put kreira post i onda u njega stavljam komentare i lajkove a ne da ih dohvacam querrySelectorom
@@ -27,8 +26,7 @@ export class Post {
         this.writenContent = writenContent;
         this.likes = [];
         this.postComments = [];
-        this.commentSection = feed.querySelector('.posts');
-        this.likesSection = feed.querySelector('.posts');
+        this.commentSection = posts.querySelector('form');
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -36,14 +34,23 @@ export class Post {
     pushLikeInArray(like){
         this.likes.push(like);
     }
-    createFirstPostComments(){
-        commentsFirstPost.forEach(comment => this.pushFirstPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
+    createDefaultComments(){
+
     }
+
+    createPostComments(){
+        commentsPost.forEach(comments => comments.forEach(comment => console.log(comment)))
+        for(let i = 0; i < this.postComments.length; i++){
+            console.log('radi', i)
+        }
+        // commentsFirstPost.forEach(comment => this.pushFirstPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
+    }
+     pushPostCommentsInArray(){
+        commentsPost.forEach(comments => this.postComments.push(comments));
+    }
+    /*
     createThirdPostComments(){
         commentsThirdPost.forEach(comment => this.pushThirdPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
-    }
-    pushFirstPostCommentsInArray(comment){
-        if(comment) this.postComments.push(comment);
     }
     pushThirdPostCommentsInArray(comment){
         if(comment) this.postComments.push(comment);
@@ -78,7 +85,7 @@ export class Post {
         let likesList = this.likesSection.querySelectorAll('li');
         const likeSec = likesList[2].children[2];
         this.likes.forEach(like => like.displayLikes(like, likeSec));
-    }
+    } */
 }
 
 export class Likes {
@@ -195,39 +202,22 @@ class User {
     getActivePost(){
         return this.activePost;
     }
+    pushDefaultPostInArray(){   
+        postContent.forEach(post => this.posts.unshift(post));
+    }
+    iterateThroughDefaultPost(){
+        this.posts.forEach(post => this.displayPost(post));
+    }
+    getDefaultPosts(){
+        return this.posts;
+    }
 }
 export const manageUser = new User();
 manageUser.pushFriendsInArray();
 manageUser.iterateThroughFriendsArray();
 
-const firstPost = new Post("If I'm to choose between one evil and another, I'd rather not choose at all.", "11 months ago");
-const secondPost = new Post("It's not who I am underneath, but what I do that defines me.", 'about 1 year ago');
-const thirdPost = new Post("A true hero isn't measured by the size of his strength but by the strength of his heart", 'about 1 year ago');
+manageUser.pushDefaultPostInArray();
+manageUser.iterateThroughDefaultPost();
 
-manageUser.pushPostInArray(firstPost);
-manageUser.pushPostInArray(secondPost);
-manageUser.pushPostInArray(thirdPost);
-
-manageUser.displayPost(firstPost);
-manageUser.displayPost(secondPost);
-manageUser.displayPost(thirdPost);
-
-firstPost.createFirstPostComments();
-thirdPost.createThirdPostComments();
-firstPost.pushFirstPostCommentsInArray();
-thirdPost.pushThirdPostCommentsInArray();
-
-firstPost.displayFirstPostComments();
-thirdPost.displayThirdPostComments();
-
-firstPost.createPostLikes();
-secondPost.createPostLikes();
-thirdPost.createPostLikes();
-
-firstPost.pushPostLikesInArray();
-secondPost.pushPostLikesInArray();
-thirdPost.pushPostLikesInArray();
-
-firstPost.displayFirstPostLikes();
-secondPost.displaySecondPostLikes();
-thirdPost.displayThirdPostLikes();
+manageUser.pushPostInArray();
+manageUser.getDefaultPosts()
