@@ -51,8 +51,7 @@ posts.addEventListener('click', (e) => {
     const activePost = manageUser.getActivePost();
     if(btn){
         if(btn.className === 'like'){
-                const id = crypto.randomUUID();
-                const likes = new Likes(id, 'Bernard', 'Krehula');
+                const likes = new Likes('Bernard', 'Krehula');
                 activePost.pushLikeInArray(likes);
             }
     }

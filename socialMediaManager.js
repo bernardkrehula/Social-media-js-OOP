@@ -5,8 +5,10 @@ import { posts } from "./script.js";
 import { commentsFirstPost } from "./commentsList.js";
 import { commentsThirdPost } from "./commentsList.js";
 import { feed } from "./script.js";
+import { postLikes } from "./postLikes.js"; 
 
 //Dodati display likes i komentara vec postojecih
+//Napraviti na nacin da se svaki put kreira post i onda u njega stavljam komentare i lajkove a ne da ih dohvacam querrySelectorom
 
 //Lista featura: 
 //-Da se dodaje novi post
@@ -26,6 +28,7 @@ export class Post {
         this.likes = [];
         this.postComments = [];
         this.commentSection = feed.querySelector('.posts');
+        this.likesSection = feed.querySelector('.posts');
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -43,7 +46,7 @@ export class Post {
         if(comment) this.postComments.push(comment);
     }
     pushThirdPostCommentsInArray(comment){
-         if(comment) this.postComments.push(comment);
+        if(comment) this.postComments.push(comment);
     }
     displayFirstPostComments(){
         let commentlists = this.commentSection.querySelectorAll('li');
@@ -55,18 +58,42 @@ export class Post {
         const commentSec = commentlists[2].children[5];
         this.postComments.forEach(comment => comment.displayComment(comment, commentSec));
     }
-    returnPostComments(){
-        return this.postComments;
+    createPostLikes(){
+        postLikes.forEach(like => this.pushPostLikesInArray(new Likes(like.name, like.lastName)))
+    }
+    pushPostLikesInArray(like){
+        if(like) this.likes.push(like);
+    }
+    displayFirstPostLikes(){
+        let likesList = this.likesSection.querySelectorAll('li');
+        const likeSec = likesList[0].children[2];
+        this.likes.forEach(like => like.displayLikes(like, likeSec));
+    }
+    displaySecondPostLikes(){
+        let likesList = this.likesSection.querySelectorAll('li');
+        const likeSec = likesList[1].children[2];
+        this.likes.forEach(like => like.displayLikes(like, likeSec));
+    }
+    displayThirdPostLikes(){
+        let likesList = this.likesSection.querySelectorAll('li');
+        const likeSec = likesList[2].children[2];
+        this.likes.forEach(like => like.displayLikes(like, likeSec));
     }
 }
 
 export class Likes {
-    constructor(id, name, lastName){
-        this.id = id;
+    constructor(name, lastName){
+        this.id = crypto.randomUUID();
         this.name = name;
         this.lastName = lastName;
-        this.isLiked = isLiked;
     }
+    displayLikes(like, likeSection){
+        const html = `
+        <h4>${like.name}${like.lastName}</h4>
+        `;
+        likeSection.insertAdjacentHTML('afterbegin', html);
+    }
+    //<h4>Kilibarda Petrovska, Hiroshi Tanaka and 2 others likes this post</h4>
 }
 export class Comment {
     constructor(content, userName, userLastName, userImg){
@@ -87,9 +114,6 @@ export class Comment {
         `;
     comments.insertAdjacentHTML('beforeend', html);
     }
-   /*  iterateThroughComments() {
-       this.postComments.forEach(comment => this.displayComment(comment));
-    } */
 }
 
 class User {
@@ -146,7 +170,6 @@ class User {
                     </div>
                     <h3>${post.writenContent}</h3>
                     <div class="showComment">
-                        <h4>Kilibarda Petrovska, Hiroshi Tanaka and 2 others likes this post</h4>
                         <h5>4 comments</h5>
                     </div>
                     <div class="likeCommentBtns">
@@ -196,3 +219,15 @@ thirdPost.pushThirdPostCommentsInArray();
 
 firstPost.displayFirstPostComments();
 thirdPost.displayThirdPostComments();
+
+firstPost.createPostLikes();
+secondPost.createPostLikes();
+thirdPost.createPostLikes();
+
+firstPost.pushPostLikesInArray();
+secondPost.pushPostLikesInArray();
+thirdPost.pushPostLikesInArray();
+
+firstPost.displayFirstPostLikes();
+secondPost.displaySecondPostLikes();
+thirdPost.displayThirdPostLikes();
