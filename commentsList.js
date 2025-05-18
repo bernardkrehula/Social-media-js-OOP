@@ -23,6 +23,7 @@ export const commentsPost = [
         userLastName: 'Stouns',
         userImg: '/images/profile1.jpg'
     }],
+    null,
     [{
         content: "Sometimes, it's the small gestures that make someone a hero",
         userName: 'Hiroshi',

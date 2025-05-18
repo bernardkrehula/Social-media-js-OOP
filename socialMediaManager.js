@@ -34,19 +34,6 @@ export class Post {
     pushLikeInArray(like){
         this.likes.push(like);
     }
-    findPost(){
-        return 
-    }
-    createDefaultComments(){
-        console.log('radi')
-    }
-    createPostComments(){
-        commentsPost.forEach((comments, index) => console.log(index) )
-        // commentsFirstPost.forEach(comment => this.pushFirstPostCommentsInArray(new Comment(comment.content, comment.userName, comment.userLastName, comment.userImg)));
-    }
-    pushPostCommentsInArray(){
-        commentsPost.forEach(comments => this.postComments.push(comments));
-    }
     addComments(commentsArray) {
     commentsArray.forEach(commentData => {
         const comment = new Comment(
@@ -57,7 +44,31 @@ export class Post {
         );
         this.postComments.push(comment);
     });
-}
+    }
+    displayDefaultComments(postId){
+        const post = document.getElementById(`${postId}`);
+        let comments = post.querySelector('.comments')
+        this.postComments.forEach(comment => comment.displayComment(comment, comments))
+    }
+    displayShowCommentsBtn(postId){
+        const post = document.getElementById(`${postId}`);
+        let showComment = post.querySelector('.showComment');
+        this.postComments[0].displayDefaultCommnetsNumber(this.postComments.length, showComment)
+    }
+    addLikes(){
+        postLikes.forEach(likeData => {
+            const like = new Likes(
+                likeData.name,
+                likeData.lastName
+            )
+            this.likes.push(like);
+        })
+    }
+    displayDefaultLikes(postId){
+        const post = document.getElementById(`${postId}`);
+        let postLikes = post.querySelector('.showComment');
+        this.likes.forEach(like => like.displayLikes(like, postLikes));
+    }
 }
 
 export class Likes {
@@ -68,7 +79,7 @@ export class Likes {
     }
     displayLikes(like, likeSection){
         const html = `
-        <h4>${like.name}${like.lastName}</h4>
+        <h4>${like.name} ${like.lastName}</h4>
         `;
         likeSection.insertAdjacentHTML('afterbegin', html);
     }
@@ -92,6 +103,11 @@ export class Comment {
         </div>
         `;
     comments.insertAdjacentHTML('beforeend', html);
+    }
+    displayDefaultCommnetsNumber(commentsNumber, comments){
+        const html = `<h5>${commentsNumber} comments</h5>`;
+
+        comments.insertAdjacentHTML('beforeend', html);
     }
 }
 
@@ -125,7 +141,7 @@ class User {
         let html = `
          <li class="friend">
                 <img src="${friend.img}">
-                <h3>${friend.firstName} ${friend.lastName}</h3>
+                <h4>${friend.firstName}${friend.lastName}</h4>
         </li>
         `
         searchFriendsList.insertAdjacentHTML('beforeend', html);
@@ -137,6 +153,8 @@ class User {
     pushPostInArray(post){
         this.posts.push(post);
     }
+    //<h4>Kilibarda Petrovska, Hiroshi Tanaka and 2 others likes this post</h4>
+
     displayPost(post){
         const html = `
         <li class="post" id="${post.id}">
@@ -149,7 +167,6 @@ class User {
                     </div>
                     <h3>${post.writenContent}</h3>
                     <div class="showComment">
-                        <h5>4 comments</h5>
                     </div>
                     <div class="likeCommentBtns">
                          <button class="like">👍🏻Like</button>
@@ -164,9 +181,6 @@ class User {
                 </li>
         `
         posts.insertAdjacentHTML('beforeend', html);
-
-
-
     }
     findPostById(id){
         return this.posts.find(post => post.id === id);
@@ -194,11 +208,13 @@ manageUser.iterateThroughFriendsArray();
 manageUser.pushDefaultPostInArray();
 manageUser.iterateThroughDefaultPost();
 
-manageUser.pushPostInArray();
 manageUser.getDefaultPosts().forEach((post, index) => {
     const commentsForThisPost = commentsPost[index];
-    if (commentsForThisPost) {
+    if (Array.isArray(commentsForThisPost)) {
         post.addComments(commentsForThisPost);
+        post.displayDefaultComments(post.id);
+        post.addLikes();
+        post.displayDefaultLikes(post.id);
+        post.displayShowCommentsBtn(post.id);
     }
 });
-manageUser.iterateThroughDefaultPost();
