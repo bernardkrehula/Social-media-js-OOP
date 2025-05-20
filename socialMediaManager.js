@@ -5,9 +5,15 @@ import { posts } from "./script.js";
 import { commentsPost } from "./commentsList.js";
 import { postLikes } from "./postLikes.js";
 import { postContent } from "./postContent.js";
+import { data } from "./data.js";
 
 //Dodati display likes i komentara vec postojecih
 //Napraviti na nacin da se svaki put kreira post i onda u njega stavljam komentare i lajkove a ne da ih dohvacam querrySelectorom
+
+//Spojiti postContent.js commentsList.js i postLikes.js u jedan array u data.js
+//Od toga arraya napraviti pocetni sadrzaj
+//Funckije addLikes, addComments pomjerit van klase post i pozvati ih jedamput u globalni scope
+
 
 //Lista featura: 
 //-Da se dodaje novi post
@@ -20,13 +26,12 @@ import { postContent } from "./postContent.js";
 //-Da se obrise komentar (samo svoj)
 //Bonus - da se edituje komentar
 export class Post {
-    constructor(writenContent, time){
+    constructor(writenContent, time, postComments, likes){
         this.id = crypto.randomUUID();
         this.time = time;
         this.writenContent = writenContent;
-        this.likes = [];
-        this.postComments = [];
-        this.commentSection = posts.querySelector('form');
+        this.likes = likes;
+        this.postComments = postComments;
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -34,28 +39,22 @@ export class Post {
     pushLikeInArray(like){
         this.likes.push(like);
     }
-    addComments(commentsArray) {
-    commentsArray.forEach(commentData => {
-        const comment = new Comment(
-            commentData.content,
-            commentData.userName,
-            commentData.userLastName,
-            commentData.userImg
-        );
-        this.postComments.push(comment);
-    });
+    displayDefaultComments(){
+        const post = document.getElementById(`${this.id}`);
+        let commentsHtml = post.querySelector('.comments');
+        this.postComments.forEach(comment =>  { 
+            if(comment){
+                comment.displayComment(comment, commentsHtml)
+            }
+        }
+        ) 
     }
-    displayDefaultComments(postId){
-        const post = document.getElementById(`${postId}`);
-        let comments = post.querySelector('.comments')
-        this.postComments.forEach(comment => comment.displayComment(comment, comments))
-    }
-    displayShowCommentsBtn(postId){
-        const post = document.getElementById(`${postId}`);
+    displayShowCommentsBtn(){
+        const post = document.getElementById(`${this.id}`);
         let showComment = post.querySelector('.showComment');
         this.postComments[0].displayDefaultCommnetsNumber(this.postComments.length, showComment)
-    }
-    addLikes(){
+    } 
+  /*   addLikes(){
         postLikes.forEach(likeData => {
             const like = new Likes(
                 likeData.name,
@@ -63,12 +62,12 @@ export class Post {
             )
             this.likes.push(like);
         })
-    }
-    displayDefaultLikes(postId){
+    } */
+    /* displayDefaultLikes(postId){
         const post = document.getElementById(`${postId}`);
         let postLikes = post.querySelector('.showComment');
         this.likes.forEach(like => like.displayLikes(like, postLikes));
-    }
+    } */
 }
 
 export class Likes {
@@ -104,10 +103,10 @@ export class Comment {
         `;
     comments.insertAdjacentHTML('beforeend', html);
     }
-    displayDefaultCommnetsNumber(commentsNumber, comments){
-        const html = `<h5>${commentsNumber} comments</h5>`;
-
-        comments.insertAdjacentHTML('beforeend', html);
+    displayDefaultCommnetsNumber(comment, commentsHtml){
+        const html = `<h5>${comment.content} comments</h5>`;
+        
+        commentsHtml.insertAdjacentHTML('beforeend', html);
     }
 }
 
@@ -192,7 +191,7 @@ class User {
         return this.activePost;
     }
     pushDefaultPostInArray(){   
-        postContent.forEach(post => this.posts.push(new Post(post.writenContent, post.time, post.id)));
+        data.forEach(post => this.posts.push(new Post(post.writenContent, post.time, post.postComments, post.likes)));
     }
     iterateThroughDefaultPost(){
         this.posts.forEach(post => this.displayPost(post));
@@ -209,12 +208,24 @@ manageUser.pushDefaultPostInArray();
 manageUser.iterateThroughDefaultPost();
 
 manageUser.getDefaultPosts().forEach((post, index) => {
-    const commentsForThisPost = commentsPost[index];
-    if (Array.isArray(commentsForThisPost)) {
-        post.addComments(commentsForThisPost);
-        post.displayDefaultComments(post.id);
+    post.postComments = post.postComments.map(commentData => {
+        if(commentData){
+                return new Comment(
+                commentData.content,
+                commentData.userName,
+                commentData.userLastName,
+                commentData.userImg
+            )
+        }
+    }
+    );
+    post.displayDefaultComments();
+    post.displayShowCommentsBtn()
+    /*    
+        post.addComments();
+        
         post.addLikes();
         post.displayDefaultLikes(post.id);
-        post.displayShowCommentsBtn(post.id);
+        post.displayShowCommentsBtn(post.id); */
     }
-});
+);

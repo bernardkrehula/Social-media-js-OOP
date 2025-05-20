@@ -2,7 +2,7 @@ export const postContent = [
     {
         id: crypto.randomUUID(),
         writenContent: "If I'm to choose between one evil and another, I'd rather not choose at all.",
-        time: "11 months ago"
+        time: "11 months ago",
     },
     {
         id: crypto.randomUUID(),

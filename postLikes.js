@@ -6,5 +6,5 @@ export const postLikes = [
   {
     name: "Hiroshi",
     lastName: "Tanaka",
-  },
+  }
 ];
