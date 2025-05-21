@@ -52,11 +52,10 @@ export class Post {
     displayShowCommentsBtn(){
         const post = document.getElementById(`${this.id}`);
         let showComment = post.querySelector('.showComment');
-        console.log(this.postComments.length)
-    
-        this.postComments.forEach(comment => {
-            comment.displayDefaultCommnetsNumber(this.postComments.length, showComment)
-        })
+        if (this.postComments.length > 0) {
+        const commentInstance = new Comment("", "", "", "");
+        commentInstance.displayDefaultCommnetsNumber(this.postComments.length, showComment);
+        }
     } 
 
     displayDefaultLikes(){
@@ -98,8 +97,8 @@ export class Comment {
         `;
     comments.insertAdjacentHTML('afterbegin', html);
     }
-    displayDefaultCommnetsNumber(comment, commentsHtml){
-        const html = `<h5>${comment.content} comments</h5>`;
+    displayDefaultCommnetsNumber(commentCount, commentsHtml){
+        const html = `<h5>${commentCount} comments</h5>`;
         
         commentsHtml.insertAdjacentHTML('beforeend', html);
     }
@@ -220,7 +219,7 @@ manageUser.getDefaultPosts().forEach((post, index) => {
         )
     })
     post.displayDefaultComments();
-    post.displayShowCommentsBtn();
     post.displayDefaultLikes();
+    post.displayShowCommentsBtn();
     }
 );
