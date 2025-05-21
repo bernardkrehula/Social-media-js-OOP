@@ -52,22 +52,18 @@ export class Post {
     displayShowCommentsBtn(){
         const post = document.getElementById(`${this.id}`);
         let showComment = post.querySelector('.showComment');
-        this.postComments[0].displayDefaultCommnetsNumber(this.postComments.length, showComment)
-    } 
-  /*   addLikes(){
-        postLikes.forEach(likeData => {
-            const like = new Likes(
-                likeData.name,
-                likeData.lastName
-            )
-            this.likes.push(like);
+        console.log(this.postComments.length)
+    
+        this.postComments.forEach(comment => {
+            comment.displayDefaultCommnetsNumber(this.postComments.length, showComment)
         })
-    } */
-    /* displayDefaultLikes(postId){
-        const post = document.getElementById(`${postId}`);
+    } 
+
+    displayDefaultLikes(){
+        const post = document.getElementById(`${this.id}`);
         let postLikes = post.querySelector('.showComment');
         this.likes.forEach(like => like.displayLikes(like, postLikes));
-    } */
+    } 
 }
 
 export class Likes {
@@ -80,9 +76,8 @@ export class Likes {
         const html = `
         <h4>${like.name} ${like.lastName}</h4>
         `;
-        likeSection.insertAdjacentHTML('afterbegin', html);
+        likeSection.insertAdjacentHTML('beforeend', html);
     }
-    //<h4>Kilibarda Petrovska, Hiroshi Tanaka and 2 others likes this post</h4>
 }
 export class Comment {
     constructor(content, userName, userLastName, userImg){
@@ -101,7 +96,7 @@ export class Comment {
             </div>
         </div>
         `;
-    comments.insertAdjacentHTML('beforeend', html);
+    comments.insertAdjacentHTML('afterbegin', html);
     }
     displayDefaultCommnetsNumber(comment, commentsHtml){
         const html = `<h5>${comment.content} comments</h5>`;
@@ -152,7 +147,6 @@ class User {
     pushPostInArray(post){
         this.posts.push(post);
     }
-    //<h4>Kilibarda Petrovska, Hiroshi Tanaka and 2 others likes this post</h4>
 
     displayPost(post){
         const html = `
@@ -179,7 +173,7 @@ class User {
                     <div class="comments"></div>
                 </li>
         `
-        posts.insertAdjacentHTML('beforeend', html);
+        posts.insertAdjacentHTML('afterbegin', html);
     }
     findPostById(id){
         return this.posts.find(post => post.id === id);
@@ -191,7 +185,7 @@ class User {
         return this.activePost;
     }
     pushDefaultPostInArray(){   
-        data.forEach(post => this.posts.push(new Post(post.writenContent, post.time, post.postComments, post.likes)));
+        data.forEach(post => this.posts.unshift(new Post(post.writenContent, post.time, post.postComments, post.likes)));
     }
     iterateThroughDefaultPost(){
         this.posts.forEach(post => this.displayPost(post));
@@ -219,13 +213,14 @@ manageUser.getDefaultPosts().forEach((post, index) => {
         }
     }
     );
+    post.likes = post.likes.map(likeData => {
+            return new Likes(
+                likeData.name,
+                likeData.lastName
+        )
+    })
     post.displayDefaultComments();
-    post.displayShowCommentsBtn()
-    /*    
-        post.addComments();
-        
-        post.addLikes();
-        post.displayDefaultLikes(post.id);
-        post.displayShowCommentsBtn(post.id); */
+    post.displayShowCommentsBtn();
+    post.displayDefaultLikes();
     }
 );
