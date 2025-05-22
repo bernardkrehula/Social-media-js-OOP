@@ -2,9 +2,6 @@ import { friends } from "./friendsList.js";
 import { searchFriendsList } from "./script.js";
 import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
-import { commentsPost } from "./commentsList.js";
-import { postLikes } from "./postLikes.js";
-import { postContent } from "./postContent.js";
 import { data } from "./data.js";
 
 //Dodati display likes i komentara vec postojecih
