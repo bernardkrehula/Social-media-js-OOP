@@ -46,6 +46,8 @@ posts.addEventListener('click', (e) => {
     const comments = post.querySelector('.comments');
     const btn = e.target.closest('button');
     const postId = e.target.closest('li').id;
+    const dots = post.querySelector('.dot');
+    const dostContent = post.querySelector('.dots-content');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -61,7 +63,24 @@ posts.addEventListener('click', (e) => {
             comments.style.display = 'block'
         }
         else{
-            comments.style.display ='none'
+            comments.style.display = 'none';
+        }
+    }
+    if(dots){
+        console.log(dostContent)
+        if(dostContent.style.display === 'none'){
+            dostContent.style.display = 'block';
+        }
+        else {
+            dostContent.style.display = 'none'
+        }
+    }
+    if(btn){
+        if(btn.className == 'edit'){
+        console.log('radi')
+
+        }
+        if(btn.className == 'delete'){
         }
     }
 })
