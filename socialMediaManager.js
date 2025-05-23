@@ -4,13 +4,8 @@ import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
 import { data } from "./data.js";
 
-//Dodati display likes i komentara vec postojecih
-//Napraviti na nacin da se svaki put kreira post i onda u njega stavljam komentare i lajkove a ne da ih dohvacam querrySelectorom
-
-//Spojiti postContent.js commentsList.js i postLikes.js u jedan array u data.js
-//Od toga arraya napraviti pocetni sadrzaj
-//Funckije addLikes, addComments pomjerit van klase post i pozvati ih jedamput u globalni scope
-
+//How to know if I clicked outside of element in javascript
+//How to detect outside click from an element in javascript
 
 //Lista featura: 
 //-Da se dodaje novi post
@@ -153,6 +148,7 @@ class User {
                             <h1>Bernard Krehula</h1>
                             <h2>${post.time}</h2>
                         </div>
+                        <svg class='dot' xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
                     </div>
                     <h3>${post.writenContent}</h3>
                     <div class="showComment">
