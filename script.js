@@ -46,7 +46,7 @@ posts.addEventListener('click', (e) => {
     const comments = post.querySelector('.comments');
     const btn = e.target.closest('button');
     const postId = e.target.closest('li').id;
-    const dots = post.querySelector('.dot');
+    const dots = e.target.closest('svg');
     const dostContent = post.querySelector('.dots-content');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
@@ -67,20 +67,29 @@ posts.addEventListener('click', (e) => {
         }
     }
     if(dots){
-        console.log(dostContent)
+        e.stopPropagation();
         if(dostContent.style.display === 'none'){
             dostContent.style.display = 'block';
         }
         else {
-            dostContent.style.display = 'none'
+            dostContent.style.display = 'none';
         }
     }
     if(btn){
         if(btn.className == 'edit'){
-        console.log('radi')
 
         }
         if(btn.className == 'delete'){
+            manageUser.removePost()
+            manageUser.removePostFromScreen()
         }
     }
 })
+document.addEventListener('click', (e) => {
+    const dotsMenus = document.querySelectorAll('.dots-content');
+    dotsMenus.forEach(menu => {
+        if (!e.target.closest('.dot') && !e.target.closest('.dots-content')) {
+            menu.style.display = 'none';
+        }
+    });
+});
