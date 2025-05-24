@@ -20,11 +20,13 @@ addPostBtn.addEventListener('click', () => {
     const hours = time.getHours();
     const minutes = time.getMinutes();
     const getTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
-    const post = new Post(addPostInput.value, getTime);
-    manageUser.pushPostInArray(post);
-    manageUser.displayPost(post);
-    post.setCommentsAndLikesToArray();
-    addPostInput.value = '';
+    if(addPostInput.value){
+        const post = new Post(addPostInput.value, getTime);
+        manageUser.pushPostInArray(post);
+        manageUser.displayPost(post);
+        post.setCommentsAndLikesToArray();
+        addPostInput.value = '';
+    }
 })
 
 posts.addEventListener('submit', (e) => {
@@ -88,13 +90,19 @@ posts.addEventListener('click', (e) => {
             comments.style.display = 'none';
         }
     }
+ 
     if(dots){
-        e.stopPropagation();
-        if(dostContent.style.display === 'none'){
-            dostContent.style.display = 'block';
+        if(dots.className.baseVal === 'dot'){
+            e.stopPropagation();
+            if(dostContent.style.display === 'none'){
+                dostContent.style.display = 'block';
+            }
+            else {
+                dostContent.style.display = 'none';
+            }
         }
-        else {
-            dostContent.style.display = 'none';
+        if(dots.className.baseVal === 'commentDot'){
+            
         }
     }
 })

@@ -52,6 +52,10 @@ html {
     padding: 10px;
     transition: 0.1s ease-in-out;
     list-style-type: none;
+    font-size: 2.3rem;
+}
+.friend h4 {
+    margin-left: 20px;
 }
 .friend:hover {
     transition: 0.1s ease-in-out;
@@ -323,4 +327,8 @@ html {
 }
 .saveBtn:hover {
     background-color: #6561e4;
+}
+.commentDot {
+    scale: 1.6;
+    cursor: pointer;
 }

@@ -4,8 +4,13 @@ import { friendListImages } from "./script.js";
 import { posts } from "./script.js";
 import { data } from "./data.js";
 
-//How to know if I clicked outside of element in javascript
-//How to detect outside click from an element in javascript
+//Stavi da iskoci pop modala kad editas post ('Are you sure?')
+//Da se moze obrisat komentar samo svoj
+//Da se moze lajkovat komentar
+//Postavi da su neki komentari vec unaprijed lajkovani
+//Da se moze edidat komentar samo svoj
+
+//dodati na likove and 2 others
 
 //Lista featura: 
 //-Da se dodaje novi post
@@ -59,6 +64,9 @@ export class Post {
         const post = document.getElementById(`${this.id}`);
         let postLikes = post.querySelector('.showComment');
         this.likes.forEach(like => like.displayLikes(like, postLikes));
+    }
+    deleteMyComments(id){
+        this.postComments.find(comment => comment.id == id);
     } 
 }
 
@@ -90,6 +98,7 @@ export class Comment {
                 <h1>${comment.userName} ${comment.userLastName}</h1>
                 <input disabled value="${comment.content}">
             </div>
+            <svg class='commentDot' xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
         </div>
         `;
     comments.insertAdjacentHTML('afterbegin', html);
@@ -131,7 +140,7 @@ class User {
         let html = `
          <li class="friend">
                 <img src="${friend.img}">
-                <h4>${friend.firstName}${friend.lastName}</h4>
+                <h4>${friend.firstName} ${friend.lastName}</h4>
         </li>
         `
         searchFriendsList.insertAdjacentHTML('beforeend', html);
