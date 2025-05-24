@@ -24,10 +24,14 @@ export class Post {
         this.writenContent = writenContent;
         this.likes = likes;
         this.postComments = postComments;
-        this.isEdited;
+    }
+    setCommentsAndLikesToArray(){
+        this.postComments = [];
+        this.likes = [];
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
+        console.log(this.postComments)
     }
     pushLikeInArray(like){
         this.likes.push(like);
@@ -232,6 +236,11 @@ class User {
     }
     editActivePostContent(content){
         this.getActivePost().writenContent = content;
+    }
+    displayCommentsAfterEditPost(){
+        this.getActivePost().postComments.forEach(comment => {
+            comment.displayComment();
+        })
     }
 }
 export const manageUser = new User();

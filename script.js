@@ -23,6 +23,8 @@ addPostBtn.addEventListener('click', () => {
     const post = new Post(addPostInput.value, getTime);
     manageUser.pushPostInArray(post);
     manageUser.displayPost(post);
+    post.setCommentsAndLikesToArray();
+    addPostInput.value = '';
 })
 
 posts.addEventListener('submit', (e) => {
@@ -31,13 +33,17 @@ posts.addEventListener('submit', (e) => {
     const postId = e.target.closest('li').id;
     const post = e.target.closest('li');
     const comments = post.querySelector('.comments');
-    let commentInput = form.querySelector('input').value;
+    const commentInputField = form.querySelector('input');
+    let commentInput = commentInputField.value
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
-    const comment = new Comment(commentInput, 'Bernard', 'Krehula', 'IMG_8725.JPG');
-    activePost.pushCommentInArray(comment);
-    comment.displayComment(comment, comments);
+    if(commentInput) {
+        const comment = new Comment(commentInput, 'Bernard', 'Krehula', 'IMG_8725.JPG');   
+        activePost.pushCommentInArray(comment);
+        comment.displayComment(comment, comments);
+        commentInputField.value = '';
+    }
 })
 
 posts.addEventListener('click', (e) => {
@@ -53,10 +59,25 @@ posts.addEventListener('click', (e) => {
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
     if(btn){
-        if(btn.className === 'like'){
-                const likes = new Likes('Bernard', 'Krehula');
-                activePost.pushLikeInArray(likes);
-            }
+        switch(btn.className){
+            case 'like':
+            const likes = new Likes('Bernard', 'Krehula');
+            activePost.pushLikeInArray(likes);
+            break;
+        case 'edit':
+            manageUser.removePostFromScreen();
+            manageUser.editPost(manageUser.getActivePost());
+            break;
+        case 'delete':
+            manageUser.removePost();
+            manageUser.removePostFromScreen();
+            break;
+        case 'saveBtn':
+            manageUser.removePostFromScreen();
+            manageUser.editActivePostContent(editPostInput.value);
+            manageUser.displayPost(manageUser.getActivePost());
+            break;
+        }
     }
    
     if(commentBtn){
@@ -74,21 +95,6 @@ posts.addEventListener('click', (e) => {
         }
         else {
             dostContent.style.display = 'none';
-        }
-    }
-    if(btn){
-        if(btn.className == 'edit'){
-            manageUser.removePostFromScreen();
-            manageUser.editPost(manageUser.getActivePost())
-        }
-        if(btn.className == 'delete'){
-            manageUser.removePost();
-            manageUser.removePostFromScreen();
-        }
-        if(btn.className == 'saveBtn'){
-            manageUser.removePostFromScreen();
-            manageUser.editActivePostContent(editPostInput.value);
-            manageUser.displayPost(manageUser.getActivePost());
         }
     }
 })
