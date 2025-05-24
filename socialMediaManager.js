@@ -24,6 +24,7 @@ export class Post {
         this.writenContent = writenContent;
         this.likes = likes;
         this.postComments = postComments;
+        this.isEdited;
     }
     pushCommentInArray(comment){
         this.postComments.push(comment);
@@ -190,11 +191,47 @@ class User {
         return this.posts;
     }
     removePost(){
-        this.posts = this.posts.filter(post => post.id != this.getActivePost().id);
+        this.posts = this.posts.filter(post => post.id != this.activePost.id);
     }
     removePostFromScreen(){
-        const postElement = document.getElementById(this.getActivePost().id);
+        const postElement = document.getElementById(this.activePost.id);
         posts.removeChild(postElement);
+    }
+    editPost(post){
+        const html = `
+        <li class="post" id="${post.id}">
+                    <div class="photo-name-date">
+                        <img src="IMG_8725.JPG">
+                        <div class="name-Date">
+                            <h1>Bernard Krehula</h1>
+                            <h2>${post.time}</h2>
+                        </div>
+                        <svg class='dot' xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                        <div class="dots-content" style="display: none;">
+                            <button class="edit"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg> Edit</button>
+                            <button class="delete"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg> Delete</button>
+                        </div>
+                    </div>
+                    <textarea class='post-value'>${post.writenContent}</textarea>
+                    <button class='saveBtn' type='submit'>Save</button>
+                    <div class="showComment">
+                    </div>
+                    <div class="likeCommentBtns">
+                         <button class="like">👍🏻Like</button>
+                        <button>💬Comments</button>
+                    </div>
+                    <form class="addComment">
+                            <img src="IMG_8725.JPG">
+                            <input placeholder="Write a comment">
+                            <button class="addComment" type="submit">Add comment</button>
+                    </form>
+                    <div class="comments"></div>
+                </li>
+        `
+        posts.insertAdjacentHTML('afterbegin', html);
+    }
+    editActivePostContent(content){
+        this.getActivePost().writenContent = content;
     }
 }
 export const manageUser = new User();

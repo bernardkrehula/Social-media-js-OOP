@@ -303,3 +303,24 @@ html {
     transition: 0.1s ease-in-out;
     background-color: rgb(204, 204, 204);
 }
+.post-value {
+    font-size: 5rem;
+    margin-top: 20px;
+    padding: 5px 15px;
+    width: 100%;
+}
+.saveBtn {
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 5px 10px;
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: white;
+    background-color: #807cff;
+    border-radius: 8px;
+}
+.saveBtn:hover {
+    background-color: #6561e4;
+}

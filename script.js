@@ -48,6 +48,7 @@ posts.addEventListener('click', (e) => {
     const postId = e.target.closest('li').id;
     const dots = e.target.closest('svg');
     const dostContent = post.querySelector('.dots-content');
+    const editPostInput = post.querySelector('.post-value');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -77,11 +78,17 @@ posts.addEventListener('click', (e) => {
     }
     if(btn){
         if(btn.className == 'edit'){
-
+            manageUser.removePostFromScreen();
+            manageUser.editPost(manageUser.getActivePost())
         }
         if(btn.className == 'delete'){
-            manageUser.removePost()
-            manageUser.removePostFromScreen()
+            manageUser.removePost();
+            manageUser.removePostFromScreen();
+        }
+        if(btn.className == 'saveBtn'){
+            manageUser.removePostFromScreen();
+            manageUser.editActivePostContent(editPostInput.value);
+            manageUser.displayPost(manageUser.getActivePost());
         }
     }
 })
