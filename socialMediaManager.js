@@ -85,6 +85,7 @@ export class Likes {
 }
 export class Comment {
     constructor(content, userName, userLastName, userImg){
+        this.id = crypto.randomUUID();
         this.content = content;
         this.userName = userName;
         this.userLastName = userLastName;
@@ -92,14 +93,18 @@ export class Comment {
     }
     displayComment(comment, comments){
         const html = `
-        <div class="comment">
+        <div class="comment" id="${comment.id}">
             <img src="${comment.userImg}">
             <div class="comment-name">
                 <h1>${comment.userName} ${comment.userLastName}</h1>
                 <input disabled value="${comment.content}">
             </div>
             <svg class='commentDot' xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></svg>
-        </div>
+            <div class="dots-contentComments" style="display: none;">
+                <button class="editComment"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg> Edit</button>
+                <button class="deleteComment"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg> Delete</button>
+            </div>
+            </div>
         `;
     comments.insertAdjacentHTML('afterbegin', html);
     }
@@ -211,8 +216,8 @@ class User {
         posts.removeChild(postElement);
     }
     editPost(post){
+        const postHtml = document.getElementById(`${post.id}`)
         const html = `
-        <li class="post" id="${post.id}">
                     <div class="photo-name-date">
                         <img src="IMG_8725.JPG">
                         <div class="name-Date">
@@ -239,17 +244,48 @@ class User {
                             <button class="addComment" type="submit">Add comment</button>
                     </form>
                     <div class="comments"></div>
-                </li>
         `
-        posts.insertAdjacentHTML('afterbegin', html);
+        postHtml.innerHTML = `${html}`;
+        post.displayDefaultComments();
+        post.displayDefaultLikes();
+        post.displayShowCommentsBtn();
+    }
+    saveEditedPost(post){
+        const postHtml = document.getElementById(`${post.id}`)
+        const html = `
+                    <div class="photo-name-date">
+                        <img src="IMG_8725.JPG">
+                        <div class="name-Date">
+                            <h1>Bernard Krehula</h1>
+                            <h2>${post.time}</h2>
+                        </div>
+                        <svg class='dot' xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                        <div class="dots-content" style="display: none;">
+                            <button class="edit"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg> Edit</button>
+                            <button class="delete"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg> Delete</button>
+                        </div>
+                    </div>
+                    <h3>${post.writenContent}</h3>
+                    <div class="showComment">
+                    </div>
+                    <div class="likeCommentBtns">
+                         <button class="like">👍🏻Like</button>
+                        <button>💬Comments</button>
+                    </div>
+                    <form class="addComment">
+                            <img src="IMG_8725.JPG">
+                            <input placeholder="Write a comment">
+                            <button class="addComment" type="submit">Add comment</button>
+                    </form>
+                    <div class="comments"></div>
+        `
+        postHtml.innerHTML = `${html}`;
+        post.displayDefaultComments();
+        post.displayDefaultLikes();
+        post.displayShowCommentsBtn();
     }
     editActivePostContent(content){
         this.getActivePost().writenContent = content;
-    }
-    displayCommentsAfterEditPost(){
-        this.getActivePost().postComments.forEach(comment => {
-            comment.displayComment();
-        })
     }
 }
 export const manageUser = new User();
@@ -259,7 +295,7 @@ manageUser.iterateThroughFriendsArray();
 manageUser.pushDefaultPostInArray();
 manageUser.iterateThroughDefaultPost();
 
-manageUser.getDefaultPosts().forEach((post, index) => {
+manageUser.getDefaultPosts().forEach((post) => {
     post.postComments = post.postComments.map(commentData => {
         if(commentData){
                 return new Comment(

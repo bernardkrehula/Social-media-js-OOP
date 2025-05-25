@@ -55,8 +55,10 @@ posts.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     const postId = e.target.closest('li').id;
     const dots = e.target.closest('svg');
-    const dostContent = post.querySelector('.dots-content');
+    const dotsContent = post.querySelector('.dots-content');
     const editPostInput = post.querySelector('.post-value');
+    const selectedComment = e.target.closest('div');
+    const dotsMenu = selectedComment.querySelector('.dots-contentComments');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -67,7 +69,6 @@ posts.addEventListener('click', (e) => {
             activePost.pushLikeInArray(likes);
             break;
         case 'edit':
-            manageUser.removePostFromScreen();
             manageUser.editPost(manageUser.getActivePost());
             break;
         case 'delete':
@@ -75,9 +76,8 @@ posts.addEventListener('click', (e) => {
             manageUser.removePostFromScreen();
             break;
         case 'saveBtn':
-            manageUser.removePostFromScreen();
             manageUser.editActivePostContent(editPostInput.value);
-            manageUser.displayPost(manageUser.getActivePost());
+            manageUser.saveEditedPost(manageUser.getActivePost());
             break;
         }
     }
@@ -94,15 +94,20 @@ posts.addEventListener('click', (e) => {
     if(dots){
         if(dots.className.baseVal === 'dot'){
             e.stopPropagation();
-            if(dostContent.style.display === 'none'){
-                dostContent.style.display = 'block';
+            if(dotsContent.style.display === 'none'){
+                dotsContent.style.display = 'block';
             }
             else {
-                dostContent.style.display = 'none';
+                dotsContent.style.display = 'none';
             }
         }
-        if(dots.className.baseVal === 'commentDot'){
-            
+        if(dots.className.baseVal === 'commentDot'){ 
+            if(dotsMenu.style.display === 'none'){
+                dotsMenu.style.display = 'block';
+            }
+            else {
+                dotsMenu.style.display = 'none';
+            }
         }
     }
 })
