@@ -59,6 +59,7 @@ posts.addEventListener('click', (e) => {
     const editPostInput = post.querySelector('.post-value');
     const selectedComment = e.target.closest('div');
     const dotsMenu = selectedComment.querySelector('.dots-contentComments');
+    const editQuestion = post.querySelector('.safeEditQuestion')
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -69,7 +70,8 @@ posts.addEventListener('click', (e) => {
             activePost.pushLikeInArray(likes);
             break;
         case 'edit':
-            manageUser.editPost(manageUser.getActivePost());
+            dotsContent.style.display = 'none';
+            editQuestion.style.display = 'block';
             break;
         case 'delete':
             manageUser.removePost();
@@ -78,6 +80,12 @@ posts.addEventListener('click', (e) => {
         case 'saveBtn':
             manageUser.editActivePostContent(editPostInput.value);
             manageUser.saveEditedPost(manageUser.getActivePost());
+            break;
+        case 'editBtnNo':
+            editQuestion.style.display = 'none';
+            break;
+        case 'editBtnYes':
+            manageUser.editPost(manageUser.getActivePost());
             break;
         }
     }
