@@ -57,9 +57,9 @@ posts.addEventListener('click', (e) => {
     const dots = e.target.closest('svg');
     const dotsContent = post.querySelector('.dots-content');
     const editPostInput = post.querySelector('.post-value');
-    const selectedComment = e.target.closest('div');
-    const dotsMenu = selectedComment.querySelector('.dots-contentComments');
-    const editQuestion = post.querySelector('.safeEditQuestion')
+    const closestComment = e.target.closest('div');
+    const dotsMenu = closestComment.querySelector('.dots-contentComments');
+    const editQuestion = post.querySelector('.safeEditQuestion');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -86,6 +86,9 @@ posts.addEventListener('click', (e) => {
             break;
         case 'editBtnYes':
             manageUser.editPost(manageUser.getActivePost());
+            break;
+        case 'editComment':
+            activePost.editComment(closestComment.id);
             break;
         }
     }
