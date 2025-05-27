@@ -95,6 +95,9 @@ posts.addEventListener('click', (e) => {
             activePost.editActiveComment(closestComment.id, commentInput.value);
             activePost.saveEditedComment(closestComment.id);
             break;
+        case 'deleteComment':
+            activePost.removeComment(closestComment.id, comments);
+            break;
         }
     }
    

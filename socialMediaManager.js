@@ -106,6 +106,11 @@ export class Post {
             </div>
         `;
     }
+    removeComment(id, comments){
+        const comment = document.getElementById(`${id}`);
+        this.postComments.filter(comment => comment.id != id);
+        comments.removeChild(comment);
+    }
 }
 
 export class Likes {
