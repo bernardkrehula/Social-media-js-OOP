@@ -60,6 +60,7 @@ posts.addEventListener('click', (e) => {
     const closestComment = e.target.closest('div');
     const dotsMenu = closestComment.querySelector('.dots-contentComments');
     const editQuestion = post.querySelector('.safeEditQuestion');
+    const commentInput = closestComment.querySelector('.comment-name input');
 
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
@@ -89,6 +90,10 @@ posts.addEventListener('click', (e) => {
             break;
         case 'editComment':
             activePost.editComment(closestComment.id);
+            break;
+        case 'comment-saveBtn':
+            activePost.editActiveComment(closestComment.id, commentInput.value);
+            activePost.saveEditedComment(closestComment.id);
             break;
         }
     }
