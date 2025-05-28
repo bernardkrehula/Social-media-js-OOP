@@ -41,7 +41,7 @@ posts.addEventListener('submit', (e) => {
     manageUser.setAcitvePost(manageUser.findPostById(postId));
     const activePost = manageUser.getActivePost();
     if(commentInput) {
-        const comment = new Comment(commentInput, 'Bernard', 'Krehula', 'IMG_8725.JPG');   
+        const comment = new Comment(commentInput, 'Bernard', 'Krehula', 'IMG_8725.JPG', true);   
         activePost.pushCommentInArray(comment);
         comment.displayComment(comment, comments);
         commentInputField.value = '';
@@ -89,11 +89,11 @@ posts.addEventListener('click', (e) => {
             manageUser.editPost(manageUser.getActivePost());
             break;
         case 'editComment':
-            activePost.editComment(closestComment.id);
+            activePost.editComment(closestComment.id, comments);
             break;
         case 'comment-saveBtn':
             activePost.editActiveComment(closestComment.id, commentInput.value);
-            activePost.saveEditedComment(closestComment.id);
+            activePost.saveEditedComment(closestComment.id, comments);
             break;
         case 'deleteComment':
             activePost.removeComment(closestComment.id, comments);

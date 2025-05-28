@@ -10,18 +10,6 @@ import { data } from "./data.js";
 //Postavi da su neki komentari vec unaprijed lajkovani
 //Da se moze edidat komentar samo svoj
 
-//dodati na likove and 2 others
-
-//Lista featura: 
-//-Da se dodaje novi post
-//-Da se komentarise
-//-Da se edituje post
-//-Da se edituje komentar
-//-Da se lajkuje post
-//-Da se lajkuje komentar
-//-Da se obrise post (samo svoj)
-//-Da se obrise komentar (samo svoj)
-//Bonus - da se edituje komentar
 export class Post {
     constructor(writenContent, time, postComments, likes){
         this.id = crypto.randomUUID();
@@ -73,10 +61,12 @@ export class Post {
     editActiveComment(id, content){
         this.findComment(id).writenContent = content;
     }
-    editComment(id){
-        const comment = document.getElementById(`${id}`);
+    editComment(id, comments){
         const foundComment = this.findComment(id);
-        comment.innerHTML = ` 
+
+        if(foundComment.isUserComment){
+            const comment = comments.querySelector(`#${id}`);
+            comment.innerHTML = ` 
             <img src="${foundComment.userImg}">
             <div class="comment-name">
                 <h1>${foundComment.userName} ${foundComment.userLastName}</h1>
@@ -89,9 +79,13 @@ export class Post {
             </div>
             <button class='comment-saveBtn' type='submit'>Save</button>
         `;
+        }
     }
-    saveEditedComment(id){
-        const comment = document.getElementById(`${id}`);
+
+    //Vidijeti kako napraviti apstrakciju za innerHtml
+    //Moguce editovat samo sobstveni komentar (modal se zatvara klikom van njega)
+    saveEditedComment(id, comments){
+        const comment = comments.querySelector(`#${id}`);
         const foundComment = this.findComment(id);
         comment.innerHTML = ` 
             <img src="${foundComment.userImg}">
@@ -106,8 +100,9 @@ export class Post {
             </div>
         `;
     }
+    //Selektirati preko posta 
     removeComment(id, comments){
-        const comment = document.getElementById(`${id}`);
+        const comment = comments.querySelector(`#${id}`);
         this.postComments.filter(comment => comment.id != id);
         comments.removeChild(comment);
     }
@@ -127,12 +122,13 @@ export class Likes {
     }
 }
 export class Comment {
-    constructor(content, userName, userLastName, userImg){
+    constructor(content, userName, userLastName, userImg, isUserComment){
         this.id = crypto.randomUUID();
         this.content = content;
         this.userName = userName;
         this.userLastName = userLastName;
         this.userImg = userImg;
+        this.isUserComment = isUserComment;
     }
     displayComment(comment, comments){
         const html = `
